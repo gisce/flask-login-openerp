@@ -1,0 +1,26 @@
+{% extends 'openerp_login/base.html' %}
+{% block content %}
+        <h1>Login</h1>
+        <form method="POST">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.login.label }}
+                {{ form.login(class_="form-control") }}
+                {% if form.login.errors %}
+                {% for e in form.login.errors %}
+                <p class="help-block">{{ e }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class_="form-control") }}
+                {% if form.password.errors %}
+                {% for e in form.password.errors %}
+                <p class="help-block">{{ e }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <input type="submit" value="Login" class="btn btn-default"/>
+        </form>
+{% endblock %}
