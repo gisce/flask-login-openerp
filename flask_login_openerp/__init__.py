@@ -88,7 +88,7 @@ class OpenERPLogin(LoginManager):
                 user = OpenERPUser()
                 user.id = user_id
                 login_user(user)
-                session['openerp_user_id'] = form.login.data
+                session['openerp_user_id'] = user_id
                 session['openerp_password'] = form.password.data
                 return redirect(request.args.get("next") or url_for('index'))
             else:
