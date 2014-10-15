@@ -1,5 +1,6 @@
 from flask import (
-    Blueprint, render_template, flash, redirect, url_for, request, g
+    Blueprint, render_template, flash, redirect, url_for, request, g,
+    session
 )
 from flask.ext.wtf import Form
 from wtforms import validators, StringField, PasswordField
@@ -61,6 +62,10 @@ class OpenERPLogin(LoginManager):
     @login_required
     def logout(self):
         logout_user()
+        if 'openerp_user_id' in session:
+            del session['openerp_user_id']
+        if 'openerp_password' in session:
+            del session['openerp_password']
         flash("You have been logout", "info")
         if self.logout_redirect_view:
             return redirect(url_for(self.logout_redirect_view))
@@ -83,6 +88,8 @@ class OpenERPLogin(LoginManager):
                 user = OpenERPUser()
                 user.id = user_id
                 login_user(user)
+                session['openerp_user_id'] = user_id
+                session['openerp_password'] = form.password.data
                 return redirect(request.args.get("next") or url_for('index'))
             else:
                 flash("User or password incorrect.", "danger")
