@@ -2,9 +2,9 @@ from flask import (
     Blueprint, render_template, flash, redirect, url_for, request, g,
     session
 )
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import validators, StringField, PasswordField
-from flask.ext.login import (
+from flask_login import (
     LoginManager, UserMixin, login_user, login_required, logout_user
 )
 from flask.ext.openerp import Object
