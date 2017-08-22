@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+        .container{
+            box-shadow: 10px 10px 10px #888888;
+            background-color: #097da0;
+            margin-top: 25px;
+            border-radius: 25px;
+        }
+        .alert{
+            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 40%;
+        }
+    </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +40,11 @@
         <div class="alert {% if category %}alert-{{ category }} {% endif %}">
           <a href="javascript:void(0)" class="close" data-dismiss="alert">x</a>
           {{ m }}
+          <script>
+            setTimeout(function() {
+              $('.alert').fadeOut('slow');
+            }, 5000);
+          </script>
         </div>
       {% endfor %}
     {% endif %}

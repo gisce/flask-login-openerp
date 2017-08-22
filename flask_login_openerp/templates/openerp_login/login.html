@@ -1,9 +1,37 @@
 {% extends 'openerp_login/base.html' %}
 {% block content %}
-        <h1>Login</h1>
+        <style>
+            h1 {
+                text-align: center;
+            }
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 20px;
+            }
+            div {
+                text-align: center;
+                width: 40%;
+                vertical-align: middle;
+            }
+            .form-group {
+                margin-left: auto;
+                margin-right: auto;
+                width: 40%;
+            }
+            .help-block {
+                color: white;
+            }
+            .btn{
+                margin-bottom: 25px;
+            }
+        </style>
+        <h1 id="tittle">Login</h1>
+        <img src="data:image;base64,{{logo}}"/>
         <form method="POST">
             {{ form.csrf_token }}
-            <div class="form-group">
+            <div class="form-group" id="login">
                 {{ form.login.label }}
                 {{ form.login(class_="form-control") }}
                 {% if form.login.errors %}
