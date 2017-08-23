@@ -12,11 +12,17 @@
             border-width: 2px;
         }
         .alert{
-            margin-bottom: 10px;
             margin-top: 10px;
             margin-left: auto;
             margin-right: auto;
             width: 40%;
+            left: -50%;
+            z-index: 25;
+            position: relative;
+        }
+        .alert-container{
+            position: absolute;
+            left: 50%;
         }
     </style>
     <meta charset="utf-8">
@@ -40,6 +46,7 @@
   {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
       {% for category, m in messages %}
+      <div class="alert-container">
         <div class="alert {% if category %}alert-{{ category }} {% endif %}">
           <a href="javascript:void(0)" class="close" data-dismiss="alert">x</a>
           {{ m }}
@@ -49,6 +56,7 @@
             }, 5000);
           </script>
         </div>
+      </div>
       {% endfor %}
     {% endif %}
   {% endwith %}
