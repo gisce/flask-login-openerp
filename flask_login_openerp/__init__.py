@@ -7,7 +7,7 @@ from wtforms import validators, StringField, PasswordField
 from flask_login import (
     LoginManager, UserMixin, login_user, login_required, logout_user
 )
-from flask.ext.openerp import Object
+from flask_erppeek import get_object
 
 
 class OpenERPUser(UserMixin):
@@ -16,8 +16,8 @@ class OpenERPUser(UserMixin):
 
 
 class LoginForm(Form):
-    login = StringField('login', validators=[validators.required()])
-    password = PasswordField('password', validators=[validators.required()])
+    login = StringField('Username', validators=[validators.required()])
+    password = PasswordField('Password', validators=[validators.required()])
 
 
 class OpenERPLogin(LoginManager):
@@ -47,7 +47,7 @@ class OpenERPLogin(LoginManager):
     def load_user(user_id):
         try:
             user_id = int(user_id)
-            obj = Object(g.openerp_cnx, 'res.users')
+            obj = get_object('res.users')
             user_id = obj.search([('id', '=', user_id)])
             if user_id:
                 user_id = user_id[0]
@@ -72,12 +72,16 @@ class OpenERPLogin(LoginManager):
         return "Log out!"
 
     def login(self):
+        obj = get_object('res.users')
+        user_name = g.openerp_cnx.user
+        user_id = obj.search([('login', '=', user_name)])
+        logo = obj.browse(user_id[0]).company_id.logo
+
         if self.login_form:
             form = self.login_form
         else:
             form = LoginForm()
         if form.validate_on_submit():
-            obj = Object(g.openerp_cnx, 'res.users')
             user_id = obj.search([
                 ('login', '=', form.login.data),
                 ('password', '=', form.password.data)
@@ -93,4 +97,4 @@ class OpenERPLogin(LoginManager):
                 return redirect(request.args.get("next") or url_for('index'))
             else:
                 flash("User or password incorrect.", "danger")
-        return render_template("openerp_login/login.html", form=form)
+        return render_template("openerp_login/login.html", form=form, logo=logo)
