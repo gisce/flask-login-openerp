@@ -7,7 +7,7 @@ from wtforms import validators, StringField, PasswordField
 from flask_login import (
     LoginManager, UserMixin, login_user, login_required, logout_user
 )
-from flask_openerp import get_object
+from flask_erppeek import get_object
 
 
 class OpenERPUser(UserMixin):
