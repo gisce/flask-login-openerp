@@ -4,7 +4,7 @@
             h1 {
                 text-align: center;
             }
-            img {
+            #company_logo {
                 display: block;
                 margin-left: auto;
                 margin-right: auto;
@@ -25,6 +25,20 @@
                 margin-right: auto;
                 width: 40%;
             }
+            #company_name {
+                margin-left: auto;
+                margin-right: auto;
+                width: 40%;
+                margin-top: 35px;
+                margin-bottom: 35px;
+                text-transform: capitalize;
+                font-size: xx-large;
+                border-radius: 25px;
+                border-color: dimgrey;
+                border-style: solid;
+                border-width: 2px;
+                background-color: white;
+            }
             .help-block {
                 color: red;
             }
@@ -32,7 +46,11 @@
                 margin-bottom: 25px;
             }
         </style>
-        <img src="data:image;base64,{{logo}}"/>
+        {% if logo %}
+            <img id="company_logo" src="data:image;base64,{{logo}}"/>
+        {% else %}
+            <div id="company_name"/> {{company_name}} </div>
+        {% endif %}
         <form method="POST">
             {{ form.csrf_token }}
             <div class="form-group" id="login">
