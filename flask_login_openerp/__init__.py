@@ -75,7 +75,9 @@ class OpenERPLogin(LoginManager):
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
         user_id = obj.search([('login', '=', user_name)])
-        logo = obj.browse(user_id[0]).company_id.logo
+        company= obj.browse(user_id[0]).company_id
+        company_logo = company.logo
+        company_name = company.name
 
         if self.login_form:
             form = self.login_form
@@ -97,4 +99,7 @@ class OpenERPLogin(LoginManager):
                 return redirect(request.args.get("next") or url_for('index'))
             else:
                 flash("User or password incorrect.", "danger")
-        return render_template("openerp_login/login.html", form=form, logo=logo)
+        return render_template("openerp_login/login.html",
+                               form=form,
+                               logo=company_logo,
+                               company_name=company_name)
