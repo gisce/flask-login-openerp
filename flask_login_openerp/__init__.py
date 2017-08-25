@@ -28,6 +28,7 @@ class OpenERPLogin(LoginManager):
         self.user_loader(self.load_user)
         self.login_view = "openerp_login.login"
         self.logout_redirect_view = None
+        self.login_redirect_view = None
         self.blueprint = Blueprint('openerp_login', __name__,
                                    template_folder="templates")
         self.blueprint.add_url_rule('/login', 'login', self.login,
@@ -96,7 +97,10 @@ class OpenERPLogin(LoginManager):
                 login_user(user)
                 session['openerp_user_id'] = user_id
                 session['openerp_password'] = form.password.data
-                return redirect(request.args.get("next") or url_for('index'))
+                return redirect(
+                    request.args.get("next")
+                    or url_for(self.login_redirect_view)
+                )
             else:
                 flash("User or password incorrect.", "danger")
         return render_template("openerp_login/login.html",
