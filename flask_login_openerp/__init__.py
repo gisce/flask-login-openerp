@@ -62,12 +62,14 @@ class OpenERPLogin(LoginManager):
 
     @login_required
     def logout(self):
+        if '_flashes' in session:
+            session['_flashes'] = []
         logout_user()
         if 'openerp_user_id' in session:
             del session['openerp_user_id']
+            flash("You have been logout", "info")
         if 'openerp_password' in session:
             del session['openerp_password']
-        flash("You have been logout", "info")
         if self.logout_redirect_view:
             return redirect(url_for(self.logout_redirect_view))
         return "Log out!"
