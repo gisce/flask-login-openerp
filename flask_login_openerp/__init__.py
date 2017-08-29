@@ -12,7 +12,10 @@ from flask_erppeek import get_object
 
 class OpenERPUser(UserMixin):
     def is_authenticated(self):
-        return True
+        if 'openerp_user_id' in session:
+            return True
+        else:
+            return False
 
 
 class LoginForm(Form):
