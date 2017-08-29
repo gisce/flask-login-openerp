@@ -77,10 +77,9 @@ class OpenERPLogin(LoginManager):
             del session['openerp_user']
         if self.logout_redirect_view:
             response = redirect(url_for(self.logout_redirect_view))
-            response.headers['Cache-Control'] = ', '.join(['no-cache',
-                                                           'no-store',
-                                                           'must-revalidate'
-                                                           ])
+            response.headers['Cache-Control'] = ', '.join([
+                'no-cache','no-store','must-revalidate'
+            ])
             response.headers['Pragma'] = 'no-cache'
             response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
             return response
