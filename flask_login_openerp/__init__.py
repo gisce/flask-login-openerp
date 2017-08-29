@@ -12,7 +12,10 @@ from flask_erppeek import get_object
 
 class OpenERPUser(UserMixin):
     def is_authenticated(self):
-        return True
+        if 'openerp_user_id' in session:
+            return True
+        else:
+            return False
 
 
 class LoginForm(Form):
@@ -70,15 +73,23 @@ class OpenERPLogin(LoginManager):
             flash("You have been logout", "info")
         if 'openerp_password' in session:
             del session['openerp_password']
+        if 'openerp_user' in session:
+            del session['openerp_user']
         if self.logout_redirect_view:
-            return redirect(url_for(self.logout_redirect_view))
+            response = redirect(url_for(self.logout_redirect_view))
+            response.headers['Cache-Control'] = ', '.join([
+                'no-cache','no-store','must-revalidate'
+            ])
+            response.headers['Pragma'] = 'no-cache'
+            response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
+            return response
         return "Log out!"
 
     def login(self):
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
         user_id = obj.search([('login', '=', user_name)])
-        company= obj.browse(user_id[0]).company_id
+        company = obj.browse(user_id[0]).company_id
         company_logo = company.logo
         company_name = company.name
 
