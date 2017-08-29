@@ -78,7 +78,7 @@ class OpenERPLogin(LoginManager):
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
         user_id = obj.search([('login', '=', user_name)])
-        company= obj.browse(user_id[0]).company_id
+        company = obj.browse(user_id[0]).company_id
         company_logo = company.logo
         company_name = company.name
 
