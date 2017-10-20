@@ -8,6 +8,7 @@ from flask_login import (
     LoginManager, UserMixin, login_user, login_required, logout_user
 )
 from flask_erppeek import get_object
+from osconf import config_from_environment
 
 
 class OpenERPUser(UserMixin):
@@ -117,7 +118,17 @@ class OpenERPLogin(LoginManager):
                 )
             else:
                 flash("User or password incorrect.", "danger")
+
+        login_config = config_from_environment(
+            'FLASKLOGIN',
+            [],
+            title="Login",
+            background=None
+        )
+
         return render_template("openerp_login/login.html",
                                form=form,
                                logo=company_logo,
-                               company_name=company_name)
+                               company_name=company_name,
+                               title=login_config['title'],
+                               background=login_config['background'])
