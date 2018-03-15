@@ -49,11 +49,13 @@ class OpenERPLogin(LoginManager):
         try:
             user_id = int(user_id)
             obj = get_object('res.users')
-            user_id = obj.search([('id', '=', user_id)])
+            user_data = obj.read([('id', '=', user_id)], ["context_lang"])
             if user_id:
-                user_id = user_id[0]
+                user_id = user_data[0]["id"]
+                user_lang = user_data[0]["context_lang"]
                 user = OpenERPUser()
                 user.id = user_id
+                user.lang = user_lang
                 return user
             else:
                 return None
