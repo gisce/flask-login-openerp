@@ -100,10 +100,11 @@ class OpenERPLogin(LoginManager):
         else:
             form = LoginForm()
         if form.validate_on_submit():
-            user_id = obj.search([
-                ('login', '=', form.login.data),
-                ('password', '=', form.password.data)
-            ])
+            try:
+                g.openerp_cnx.login(form.login.data, form.password.data)
+            except Exception:
+                user_id = None
+
             if user_id:
                 user_id = user_id[0]
                 flash("Login successful", "success")
