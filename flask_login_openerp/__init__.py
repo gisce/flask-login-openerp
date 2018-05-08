@@ -106,7 +106,7 @@ class OpenERPLogin(LoginManager):
                 user_id = None
 
             if user_id:
-                user_id = user_id[0]
+                user_id = obj.search([('login', '=', form.login.data)])[0]
                 flash("Login successful", "success")
                 user = OpenERPUser()
                 user.id = user_id
