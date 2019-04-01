@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='flask-login-openerp',
-    version='0.5.3',
+    version='0.5.4',
     packages=find_packages(),
     url='https://github.com/gisce/flask-login-openerp',
     license='MIT',
