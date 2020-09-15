@@ -2,33 +2,33 @@
 <html lang="en">
   <head>
     <style>
+        body{
+          background-color: #1f9ee7;
+          background-image: url("{{background|safe}}");
+        }
         .container{
             box-shadow: 10px 10px 10px #888888;
             background-color: #e5e5e5;
-            margin-top: 25px;
             border-radius: 25px;
             border-color: black;
             border-style: solid;
             border-width: 2px;
-        }
-        .alert{
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 40%;
-            left: -50%;
-            z-index: 25;
-            position: relative;
-        }
-        .alert-container{
-            position: absolute;
+            position: fixed;
+            top: 40%;
             left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .container-alert{
+            margin-top: 15px;
+            width: 100%;
+            left: 30%;
+            position: absolute;
         }
     </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>{{title}}</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -42,11 +42,11 @@
     <![endif]-->
   </head>
   <body>
-  <div class="container">
-  {% with messages = get_flashed_messages(with_categories=True) %}
+  <!-- InfoMessage Block -->
+  <div class="container-alert">
+    {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
       {% for category, m in messages %}
-      <div class="alert-container">
         <div class="alert {% if category %}alert-{{ category }} {% endif %}">
           <a href="javascript:void(0)" class="close" data-dismiss="alert">x</a>
           {{ m }}
@@ -56,13 +56,14 @@
             }, 5000);
           </script>
         </div>
-      </div>
       {% endfor %}
     {% endif %}
-  {% endwith %}
+    {% endwith %}
+  </div>
+  <!-- Login Block -->
+  <div class="container">
   {% block content %} {% endblock %}
   </div>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
