@@ -93,7 +93,7 @@ class OpenERPLogin(LoginManager):
         :param template: name of template file to use as login page.
         :return:
         """
-        if template == None:
+        if template is None:
             template = "openerp_login/login.html"
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
