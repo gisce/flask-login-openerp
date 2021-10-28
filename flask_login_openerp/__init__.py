@@ -80,7 +80,7 @@ class OpenERPLogin(LoginManager):
         if self.logout_redirect_view:
             response = redirect(url_for(self.logout_redirect_view))
             response.headers['Cache-Control'] = ', '.join([
-                'no-cache','no-store','must-revalidate'
+                'no-cache', 'no-store', 'must-revalidate'
             ])
             response.headers['Pragma'] = 'no-cache'
             response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
@@ -88,7 +88,7 @@ class OpenERPLogin(LoginManager):
         return "Log out!"
 
     def login(self, template=None):
-        if template==None:
+        if template == None:
             template = "openerp_login/login.html"
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
