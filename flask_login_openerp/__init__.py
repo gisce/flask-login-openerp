@@ -88,6 +88,11 @@ class OpenERPLogin(LoginManager):
         return "Log out!"
 
     def login(self, template=None):
+        """
+        Resolves the login request
+        :param template: name of template file to use as login page.
+        :return:
+        """
         if template == None:
             template = "openerp_login/login.html"
         obj = get_object('res.users')
