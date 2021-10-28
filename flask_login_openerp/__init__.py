@@ -87,7 +87,9 @@ class OpenERPLogin(LoginManager):
             return response
         return "Log out!"
 
-    def login(self):
+    def login(self, template=None):
+        if template==None:
+            template = "openerp_login/login.html"
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
         user_id = obj.search([('login', '=', user_name)])
@@ -120,7 +122,7 @@ class OpenERPLogin(LoginManager):
                 )
             else:
                 flash("User or password incorrect.", "danger")
-        return render_template("openerp_login/login.html",
+        return render_template(template,
                                form=form,
                                logo=company_logo,
                                company_name=company_name)
