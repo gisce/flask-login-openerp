@@ -87,7 +87,7 @@ class OpenERPLogin(LoginManager):
             return response
         return "Log out!"
 
-    def login(self, template=None):
+    def login(self, template=None, values=None):
         """
         Resolves the login request
         :param template: name of template file to use as login page.
@@ -130,4 +130,6 @@ class OpenERPLogin(LoginManager):
         return render_template(template,
                                form=form,
                                logo=company_logo,
-                               company_name=company_name)
+                               company_name=company_name,
+                               footer_text=values.get('footer_text',
+                                                      'GISCE-TI - WebGIS'))
