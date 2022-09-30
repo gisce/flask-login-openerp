@@ -95,6 +95,8 @@ class OpenERPLogin(LoginManager):
         """
         if template is None:
             template = "openerp_login/login.html"
+        if values is None:
+            values = {}
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
         user_id = obj.search([('login', '=', user_name)])
