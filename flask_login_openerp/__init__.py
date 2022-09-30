@@ -80,14 +80,23 @@ class OpenERPLogin(LoginManager):
         if self.logout_redirect_view:
             response = redirect(url_for(self.logout_redirect_view))
             response.headers['Cache-Control'] = ', '.join([
-                'no-cache','no-store','must-revalidate'
+                'no-cache', 'no-store', 'must-revalidate'
             ])
             response.headers['Pragma'] = 'no-cache'
             response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
             return response
         return "Log out!"
 
-    def login(self):
+    def login(self, template=None, values=None):
+        """
+        Resolves the login request
+        :param template: name of template file to use as login page.
+        :return:
+        """
+        if template is None:
+            template = "openerp_login/login.html"
+        if values is None:
+            values = {}
         obj = get_object('res.users')
         user_name = g.openerp_cnx.user
         user_id = obj.search([('login', '=', user_name)])
@@ -120,7 +129,9 @@ class OpenERPLogin(LoginManager):
                 )
             else:
                 flash("User or password incorrect.", "danger")
-        return render_template("openerp_login/login.html",
+        return render_template(template,
                                form=form,
                                logo=company_logo,
-                               company_name=company_name)
+                               company_name=company_name,
+                               footer_text=values.get('footer_text',
+                                                      'GISCE-TI - WebGIS'))
