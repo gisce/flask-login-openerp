@@ -134,4 +134,5 @@ class OpenERPLogin(LoginManager):
                                logo=company_logo,
                                company_name=company_name,
                                footer_text=values.get('footer_text',
-                                                      'GISCE-TI - WebGIS'))
+                                                      'GISCE-TI - WebGIS'),
+                               page_title=values.get('page_title', 'WebGIS'))
