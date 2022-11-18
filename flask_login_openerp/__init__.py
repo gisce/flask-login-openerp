@@ -2,7 +2,7 @@ from flask import (
     Blueprint, render_template, flash, redirect, url_for, request, g,
     session
 )
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import validators, StringField, PasswordField
 from flask_login import (
     LoginManager, UserMixin, login_user, login_required, logout_user
@@ -18,9 +18,9 @@ class OpenERPUser(UserMixin):
             return False
 
 
-class LoginForm(Form):
-    login = StringField('Username', validators=[validators.required()])
-    password = PasswordField('Password', validators=[validators.required()])
+class LoginForm(FlaskForm):
+    login = StringField('Username', validators=[validators.DataRequired()])
+    password = PasswordField('Password', validators=[validators.DataRequired()])
 
 
 class OpenERPLogin(LoginManager):
